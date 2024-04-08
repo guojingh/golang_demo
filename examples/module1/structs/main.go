@@ -5,14 +5,14 @@ import (
 )
 
 type MyType struct {
-	Name string `json:"name"`
+	Name string `encoding:"name"`
 }
 
 func main() {
 	mt := MyType{Name: "test"}
 	myType := reflect.TypeOf(mt)
 	name := myType.Field(0)
-	tag := name.Tag.Get("json")
+	tag := name.Tag.Get("encoding")
 	println(tag)
 	tb := TypeB{P2: "p2", TypeA: TypeA{P1: "p1"}}
 	//可以直接访问 TypeA.P1

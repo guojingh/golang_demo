@@ -7,19 +7,20 @@ import (
 )
 
 type MyType struct {
-	Name string `json:"name"`
+	Name string `encoding:"name"`
 	Address
 }
 type Address struct {
-	City string `json:"city"`
+	City string `encoding:"city"`
 }
+
 func main() {
-	mt := MyType{Name: "test",Address: Address{City: "shanghai"}}
+	mt := MyType{Name: "test", Address: Address{City: "shanghai"}}
 	b, _ := json.Marshal(&mt)
 	fmt.Println(string(b))
 	myType := reflect.TypeOf(mt)
 	name := myType.Field(0)
-	tag := name.Tag.Get("json")
+	tag := name.Tag.Get("encoding")
 	println(tag)
 	tb := TypeB{P2: "p2", TypeA: TypeA{P1: "p1"}}
 	//可以直接访问 TypeA.P1

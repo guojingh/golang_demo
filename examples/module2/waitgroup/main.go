@@ -3,19 +3,19 @@ package main
 import (
 	"fmt"
 	"sync"
-	"time"
 )
 
 func main() {
-	waitBySleep()
+	//waitBySleep()
+	//waitByChannel()
+	waitByWG()
 }
 
-//
 func waitBySleep() {
 	for i := 0; i < 100; i++ {
 		go fmt.Println(i)
 	}
-	time.Sleep(time.Second)
+	//time.Sleep(time.Second)
 }
 
 func waitByChannel() {

@@ -28,6 +28,7 @@ func main() {
 	}
 }
 
+// Enqueue 生产者
 func (q *Queue) Enqueue(item string) {
 	q.cond.L.Lock()
 	defer q.cond.L.Unlock()
@@ -36,6 +37,7 @@ func (q *Queue) Enqueue(item string) {
 	q.cond.Broadcast()
 }
 
+// Dequeue 消费者
 func (q *Queue) Dequeue() string {
 	q.cond.L.Lock()
 	defer q.cond.L.Unlock()

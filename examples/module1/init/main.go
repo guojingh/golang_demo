@@ -8,7 +8,7 @@ import (
 )
 
 func init() {
-	fmt.Println("main init")
+	fmt.Println("test03 init")
 }
 func main() {
 

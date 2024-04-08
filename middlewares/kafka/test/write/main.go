@@ -2,6 +2,8 @@ package main
 
 import (
 	"context"
+
+	"github.com/cncamp/golang/middlewares/kafka/test"
 )
 
 func main() {

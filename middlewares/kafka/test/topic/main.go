@@ -1,5 +1,7 @@
 package main
 
+import "github.com/cncamp/golang/middlewares/kafka/test"
+
 func main() {
 
 	//创建Topic

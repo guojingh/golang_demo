@@ -7,6 +7,7 @@ import (
 	"net/rpc"
 )
 
+// server.go 表市注册服务
 func main() {
 	service := new(ServiceA)
 	rpc.Register(service)

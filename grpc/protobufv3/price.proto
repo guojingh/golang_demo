@@ -1,0 +1,12 @@
+syntax = "proto3";
+
+package protobufv3;
+
+//声明生成GO代码的导入路径（import path）
+option go_package = "protobufv3";
+
+message Price {
+    int64 market_price = 1; //建议使用下划线的命名方式
+    int64 sale_price = 2;
+}
+

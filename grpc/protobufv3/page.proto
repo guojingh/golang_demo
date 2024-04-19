@@ -1,0 +1,54 @@
+syntax = "proto3";  //必须是文件的第一行非空注释行
+
+import "../other_proto.proto";
+
+message SearchRequest {
+    string query = 1;
+    int32 page_number = 2;
+    int32 result_per_page = 3;
+
+    //定义枚举
+    enum Corpus {
+        UNIVERSAL = 0;
+        WEB = 1;
+        IMAGES = 2;
+        LOCAL = 3;
+        NEWS = 4;
+        PRODUCTS = 5;
+        VIDEO = 6;
+    }
+    Corpus corpus = 4; 
+}
+
+//可以将相同的值分配给不同的枚举常量来定义别名
+//但是 allow_alias 要设置为 true
+message MyMessage1 {
+    enum EnumAllowingAlias {
+        option allow_alias = true;
+        UNKNOWN = 0;
+        STARTED = 1
+        RUNNING = 1;
+    }
+}
+
+//相同值分配给不同的枚举常量将报错
+message MyMessage2 {
+    enum EnumNotAllowingAlias {
+        UNKNOWN = 0;
+        STARTED = 1;
+        // RUNNING = 1;  // Uncommenting this line will cause a compile error inside Google and a warning message outside.
+  }
+}
+
+//可以使用其他消息类型
+message SearchResponse {
+
+}
+
+message Result {
+    string url = 1;
+    string title = 2;
+    repeated string snippets = 3; 
+}
+
+

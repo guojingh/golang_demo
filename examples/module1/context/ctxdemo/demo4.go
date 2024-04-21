@@ -9,7 +9,7 @@ import (
 
 var wg2 = sync.WaitGroup{}
 
-func main() {
+func main4() {
 
 	t1 := time.Now()
 

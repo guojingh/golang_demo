@@ -11,7 +11,7 @@ import (
 
 var wait = sync.WaitGroup{}
 
-func main2() {
+func main() {
 
 	t1 := time.Now()
 

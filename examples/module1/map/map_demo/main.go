@@ -18,7 +18,7 @@ func main() {
 	//对 nil map 取值不会 panic 会返回一个空值
 	fmt.Println(m1[1])
 	//对 nil map 存值会 panic
-	//m1[1] = "hello"
+	m1[1] = "hello"
 
 	//对空 map 存取值都不会 panic
 	fmt.Println(m2[1])

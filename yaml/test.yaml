@@ -1,0 +1,8 @@
+# 消息代理的地址，这里使用 redis 作为代理
+broker: redis://172.16.56.130:6379
+# 消息代理的默认队列名
+default_queue: "sms"
+# 消费者处理的结果代理
+result_backend: redis://172.16.56.130:6379
+# redis的配置
+redis: "redis"

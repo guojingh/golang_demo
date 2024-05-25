@@ -1,0 +1,10 @@
+{
+  "tr_info": {
+    "description": "交易信息",
+    "type": " string",
+    "tr_type": {
+      "description": "交易类型",
+      "sonType": "ahu"
+    }
+  }
+}

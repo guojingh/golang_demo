@@ -12,6 +12,9 @@ func main() {
 	fullSlice := myArray[:]
 	remove3rdItem := deleteItem(fullSlice, 2)
 	fmt.Printf("remove3rdItem %+v\n", remove3rdItem)
+
+	mySlice2 := []int{1, 2, 3, 4, 5, 6}
+	fmt.Println(mySlice2)
 }
 
 func deleteItem(slice []int, index int) []int {

@@ -2,7 +2,6 @@ package main
 
 import (
 	"context"
-	"crypto/md5"
 	"fmt"
 	"hello_server/pb"
 	"io"
@@ -15,7 +14,7 @@ import (
 	"google.golang.org/genproto/googleapis/rpc/errdetails"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/codes"
-	"google.golang.org/grpc/credentials"
+	"google.golang.org/grpc/credentials/insecure"
 	"google.golang.org/grpc/metadata"
 	"google.golang.org/grpc/status"
 )
@@ -130,7 +129,7 @@ func (s *server) LotsOfGreetings(stream pb.Greeter_LotsOfGreetingsServer) error 
 	}
 }
 
-// BidHello 双向流式大招呼
+// BidHello 双向流式打招呼
 func (s *server) BidHello(stream pb.Greeter_BidHelloServer) error {
 	//双向流带 metadata接收
 	return s.BidirectionalStreamingSayHello(stream)

@@ -25,4 +25,6 @@ func main() {
 		time.Sleep(time.Second * 1)
 		fmt.Println("goroutines: ", runtime.NumGoroutine())
 	}
+
+	func serve(addr string, handler http.Handler, stop <-chan struct{}) error {}
 }

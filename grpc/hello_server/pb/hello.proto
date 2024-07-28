@@ -6,8 +6,8 @@ package pb;  //包名
 
 //定义服务
 service Greeter {
-    //Sayhello 方法
-    rpc SayHello (HelloRequest) returns (HelloResponse) {};
+    //Say hello 方法
+    rpc SayHello (HelloRequest) returns (HelloResponse);
     // 服务端流式返回数据
     rpc LotsOfReplies(HelloRequest) returns (stream HelloResponse);
     //客户端发送流式数据、

@@ -49,4 +49,5 @@ func rootHandler(w http.ResponseWriter, r *http.Request) {
 	for k, v := range r.Header {
 		io.WriteString(w, fmt.Sprintf("%s=%s\n", k, v))
 	}
+	rune()
 }

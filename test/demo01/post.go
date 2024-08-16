@@ -12,3 +12,10 @@ type Service interface {
 func ListPosts(svc Service) ([]*Post, error) {
 	return svc.ListPosts()
 }
+
+func main() {
+	v := []string{"1", "2", "3"}
+
+	for _ = range v {
+	}
+}

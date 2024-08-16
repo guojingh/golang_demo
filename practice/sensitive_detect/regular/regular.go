@@ -33,6 +33,7 @@ func regDemo02(sensitiveWords []string, matchContents []string) {
 
 	//构造正则匹配字符
 	regStr := strings.Join(sensitiveWords, "|")
+	//根据正则匹配字符编译一个包含字母和数字的正则表达式
 	wordReg := regexp.MustCompile(regStr)
 	fmt.Println("regStr -> ", regStr)
 

@@ -21,7 +21,7 @@ func connInflux() influxdb2.Client {
 
 // query
 /*func queryDB(cli influxdb2.Client, cmd string) (res []influxdb2.)  {
-	result, err := cli.QueryAPI(org).QueryRaw(context.Background(), cmd, influxdb2.DefaultDialect())
+	result, err := cli.QueryAPI(org).QueryRaw(contextdemo.Background(), cmd, influxdb2.DefaultDialect())
 	if err != nil {
 		fmt.Printf("query db fail, err:%v\n", err)
 		return

@@ -149,7 +149,7 @@ func SearchData(ctx context.Context, es *elasticsearch.Client, indexName string,
 }
 
 // UpdateData updates the specified index with the provided update data.
-/*func UpdateData(ctx context.Context, es *elasticsearch.Client, indexName string, updateData []UpdateResult) error {
+/*func UpdateData(ctx contextdemo.Context, es *elasticsearch.Client, indexName string, updateData []UpdateResult) error {
 	var buf strings.Builder
 	for _, update := range updateData {
 		meta := []byte(fmt.Sprintf(`{"update":{"_id":"%s"}}%s`, update.ID, "\n"))

@@ -1,6 +1,6 @@
 module hello_client
 
-go 1.22.2
+go 1.23.0
 
 require (
 	golang.org/x/oauth2 v0.17.0

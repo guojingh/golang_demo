@@ -9,7 +9,7 @@ type UserInfo struct {
 	name string
 }
 
-// 使用 context 进行传送数据 struct
+// 使用 contextdemo 进行传送数据 struct
 func main1() {
 	ctx := context.Background()
 	ctx = context.WithValue(ctx, "name", UserInfo{

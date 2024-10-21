@@ -2,12 +2,20 @@ syntax = "proto3";  //使用 protocol buffer v3版本
 
 option go_package = "hello_server/pb";  //指定生成的Go代码在你项目中的导入路径
 
-package pb;  //包名
+package pb;  // proto文件模块
+
+import "google/api/annotations.proto";
 
 //定义服务
 service Greeter {
     //Say hello 方法
-    rpc SayHello (HelloRequest) returns (HelloResponse);
+    rpc SayHello (HelloRequest) returns (HelloResponse){
+        // 写注释，gRPC-Gateway 用到的注释
+        option (google.api.http) = {
+            post: "/v1/hello"  // HTTP请求的path
+            body: "*"
+        };
+    };
     // 服务端流式返回数据
     rpc LotsOfReplies(HelloRequest) returns (stream HelloResponse);
     //客户端发送流式数据、
@@ -21,10 +29,10 @@ service Greeter {
 
 //请求消息
 message HelloRequest {
-    string name = 1;
+    string name = 1;  // 字段序号
 }
 
 //响应消息
 message HelloResponse {
-    string reply = 1;
+    string reply = 1;  // 字段序号
 }

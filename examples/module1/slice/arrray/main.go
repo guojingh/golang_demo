@@ -18,4 +18,5 @@ func main() {
 
 	newSlice = append(newSlice, 60)
 	fmt.Println(slice, newSlice)
+
 }

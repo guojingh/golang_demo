@@ -7,7 +7,7 @@ import (
 
 func main() {
 	unsafeWrite()
-	safeWrite()
+	//safeWrite()
 	time.Sleep(time.Second)
 }
 func unsafeWrite() {

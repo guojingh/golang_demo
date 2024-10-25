@@ -6,10 +6,12 @@ import (
 	"encoding/hex"
 	"errors"
 	"mall/service/user/model"
+	"time"
 
 	"api/internal/svc"
 	"api/internal/types"
 
+	"github.com/golang-jwt/jwt/v4"
 	"github.com/zeromicro/go-zero/core/logx"
 )
 
@@ -58,11 +60,37 @@ func (l *LoginLogic) Login(req *types.LoginRequest) (resp *types.LoginResponse, 
 		return &types.LoginResponse{Message: "用户还未注册，请去注册"}, nil
 	}
 
-	// 3.如果一致登陆成功，否则登陆失败
 	if passwordMd5(password) != user.Password {
 		logx.Errorf("user_Login_UsermModel_Login:%s密码输入错误", user.Username)
 		return &types.LoginResponse{Message: "用户名或密码错误"}, nil
 	}
 
-	return &types.LoginResponse{Message: "Success"}, nil
+	// 生成 JWT
+	now := time.Now().Unix()
+	expire := l.svcCtx.Config.Auth.AccessExpire
+	secretKey := l.svcCtx.Config.Auth.AccessSecret
+	token, err := l.getJwtToken(secretKey, now, expire, user.UserId)
+	if err != nil {
+		logx.Errorw("l.getJwtToken failed", logx.Field("err", err))
+		return nil, errors.New("内部错误")
+	}
+
+	// 3.如果一致登陆成功，否则登陆失败
+	return &types.LoginResponse{
+		Message:      "Success",
+		AccessToken:  token,
+		AccessExpire: int(now + expire),
+		RefreshAfter: int(now + expire/2),
+	}, nil
+}
+
+// 生成 JWT 方法
+func (l *LoginLogic) getJwtToken(secretKey string, iat, seconds, userId int64) (string, error) {
+	claims := make(jwt.MapClaims)
+	claims["exp"] = iat + seconds
+	claims["iat"] = iat
+	claims["userId"] = userId
+	token := jwt.New(jwt.SigningMethodHS256)
+	token.Claims = claims
+	return token.SignedString([]byte(secretKey))
 }

@@ -11,6 +11,9 @@ Log:
   Level: debug
   Stat: true
 
+Auth:
+  AccessSecret: 夏天夏天悄悄过去，留下小秘密
+  AccessExpire: 60
 
 Mysql:
   DataSource: root:123456@tcp(127.0.0.1:3306)/test?charset=utf8mb4&parseTime=True&loc=Local 

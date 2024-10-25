@@ -30,4 +30,5 @@ func main() {
 	if m2 == nil {
 		fmt.Println("m2 是 nil")
 	}
+
 }

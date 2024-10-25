@@ -1,6 +1,6 @@
 package model
 
-// model
+// model.nocache
 type Config struct {
 	KafkaConf `ini:"kafka"`
 	ESConf    `ini:"es"`

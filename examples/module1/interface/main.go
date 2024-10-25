@@ -20,7 +20,7 @@ func (h *Human) getName() string {
 }
 
 func (p Plane) getName() string {
-	return fmt.Sprintf("vendor: %s, model: %s", p.vendor, p.model)
+	return fmt.Sprintf("vendor: %s, model.nocache: %s", p.vendor, p.model)
 }
 
 type Car struct {

@@ -1,0 +1,6 @@
+{"@timestamp":"2024-10-25T09:57:58.680+08:00","caller":"sqlx/utils.go:147","content":"stmt: select `id`,`user_id`,`username`,`password`,`email`,`gender`,`create_time`,`update_time` from `user2` where `username` = 'guojinghu3' limit 1, error: Error 1146 (42S02): Table 'test.user2' doesn't exist","level":"error","span":"52dfaac092f60e42","trace":"ac944cf9d7ce868ff45c2427ea36fdb0"}
+{"@timestamp":"2024-10-25T09:57:58.680+08:00","caller":"logic/signupLogic.go:50","content":"user_Signup_UsermModel.FindOneByUsername failed failed","err":"Error 1146 (42S02): Table 'test.user2' doesn't exist","level":"error"}
+{"@timestamp":"2024-10-25T10:46:06.310+08:00","caller":"logic/loginlogic.go:50","content":"user_Login_UsermModel_FindOneByUsername","err":"sql: no rows in result set","level":"error"}
+{"@timestamp":"2024-10-25T10:56:52.405+08:00","caller":"logic/loginlogic.go:63","content":"user_Login_UsermModel_Login:guojinghu密码输入错误","level":"error"}
+{"@timestamp":"2024-10-25T11:20:43.054+08:00","caller":"logic/userdetaillogic.go:33","content":"user_detail_UserDetail_FindOneByUserId","err":"sql: no rows in result set","level":"error"}
+{"@timestamp":"2024-10-25T11:20:53.963+08:00","caller":"logic/userdetaillogic.go:33","content":"user_detail_UserDetail_FindOneByUserId","err":"sql: no rows in result set","level":"error"}

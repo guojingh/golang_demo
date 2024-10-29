@@ -5,6 +5,7 @@ import (
 	"errors"
 	"strconv"
 
+	"mall/service/order/api/errorx"
 	"mall/service/order/api/internal/logic/interceptor"
 	"mall/service/order/api/internal/svc"
 	"mall/service/order/api/internal/types"
@@ -34,17 +35,19 @@ func (l *SearchLogic) Search(req *types.SearchRequest) (resp *types.SearchRespon
 	orderID, err := strconv.ParseUint(req.OrderID, 10, 64)
 	if err != nil {
 		logx.Errorw("order server Search strconv.ParseUint failed", logx.Field("err", err))
-		return nil, errors.New("服务器异常")
+		return nil, errorx.NewDefaultCodeErr("数据解析错误")
 	}
 
 	order, err := l.svcCtx.OrderModel.FindOneByOrderId(l.ctx, orderID)
 	if errors.Is(err, model.ErrNotFound) {
-		return nil, errors.New("查找订单不存在")
+		// return nil, errors.New("查找订单不存在")
+		// 返回自定义的错误
+		return nil, errorx.NewDefaultCodeErr("查找订单不存在")
 	}
 
 	if err != nil {
 		logx.Errorw("order server FindOneByOrderId failed", logx.Field("err", err))
-		return nil, errors.New("服务器异常")
+		return nil, errorx.NewCodeError(errorx.MySQLErrCode, "数据库异常")
 	}
 
 	// 2.根据订单记录中的 user_id 去查询用户数据（通过RPC调用user服务）
@@ -54,7 +57,8 @@ func (l *SearchLogic) Search(req *types.SearchRequest) (resp *types.SearchRespon
 	userResp, err := l.svcCtx.UserRPC.GetUser(l.ctx, &userclient.GetUserReq{UserID: int64(order.UserId)})
 	if err != nil {
 		logx.Errorw("UserRPC.GetUser failed", logx.Field("err", err))
-		return nil, errors.New("内部错误")
+		// return nil, errors.New("内部错误")
+		return nil, errorx.NewCodeError(errorx.RPCErrCode, "RPC调用错误")
 	}
 
 	// 3.拼接返回结果（因为我们这个接口的数据不是由我们一个服务组成）

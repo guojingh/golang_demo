@@ -23,7 +23,7 @@ func main() {
 	conf.MustLoad(*configFile, &c)
 	fmt.Printf("--> conf:%#v\n", c)
 
-	// ?????????
+	// 初始化一个雪花算法节点
 	if err := logic.InitSonyflakeNode(1); err != nil {
 		fmt.Printf("init validator Trans failed,err:%v\n", err)
 		return

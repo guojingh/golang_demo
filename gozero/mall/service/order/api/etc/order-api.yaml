@@ -3,11 +3,12 @@ Host: 0.0.0.0
 Port: 8889
 
 UserRPC:
-  Etcd:
-    Hosts:
-    - 172.16.56.137:2379
-    Key: user.rpc
-    
+  # Etcd:
+  #   Hosts:
+  #   - 172.16.56.137:2379
+  #   Key: user.rpc
+  Target: consul://172.16.56.137:8500/consul-user.rpc?wait=14s
+
 Log:
   ServiceName: "user-srv"
   Mode: file

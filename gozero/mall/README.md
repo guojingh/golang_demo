@@ -96,3 +96,42 @@ CacheRedis:
 2. 修改 ServiceContext （告诉生成的代码我们现在有RPC客户端了）
     - go-zero中的RPC服务会自动生成一份客户端的代码
 3. 编写业务逻辑（可以直接通过RPC客户端发起RPC调用了）
+
+
+## 使用Consul作为注册中心
+
+### 服务注册
+1. 修改配置 (配置结构体和yaml配置文件)
+    - 引入 "github.com/zeromicro/zero-contrib/zrpc/registry/consul"
+    - 注释掉原来默认的etcd，添加Consul相关配置
+2. 服务启动的时候将服务注册到Consul
+    - consul.RegisterService(c.ListenOn, c.Cousul)    
+
+### 服务发现
+1. 修改配置
+    - Target: consul://127.0.0.1:8500/consul-user.rpc?wait=14s
+2. 程序启动时引入 import _ "github.com/zeromicro/zero-contrib/zrpc/registry/consul"
+
+
+## RPC 调用传递metadata
+
+
+### 几个知识点
+1. 什么是metadata? 什么样的数据应该传入metadata? 它和请求参数有什么区别
+2. gRPC的拦截器: 客户端的拦截器和服务端的拦截器
+
+
+### go-zero项目添加client端拦截器
+
+order服务的search接口中添加拦截器，添加一些requestID、token、userID等数据
+
+几个关键点：
+1. 什么时候存入metadata
+2. 怎么存
+3. 拦截器中如何通过context传值
+4. context存值取值操作
+
+### go-zero项目添加server端拦截器
+1. 拦截器怎么加，什么时候加
+2. 拦截器的业务逻辑怎么写
+3. 服务端拦截器如何从metadata中取值

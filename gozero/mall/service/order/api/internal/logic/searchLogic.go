@@ -5,6 +5,7 @@ import (
 	"errors"
 	"strconv"
 
+	"mall/service/order/api/internal/logic/interceptor"
 	"mall/service/order/api/internal/svc"
 	"mall/service/order/api/internal/types"
 	"mall/service/order/model"
@@ -48,10 +49,12 @@ func (l *SearchLogic) Search(req *types.SearchRequest) (resp *types.SearchRespon
 
 	// 2.根据订单记录中的 user_id 去查询用户数据（通过RPC调用user服务）
 	// 假设：user_id = 162731831328769
+	// 如何存入 adminID?
+	l.ctx = context.WithValue(l.ctx, interceptor.CtxKeyAdminID, "33")
 	userResp, err := l.svcCtx.UserRPC.GetUser(l.ctx, &userclient.GetUserReq{UserID: int64(order.UserId)})
 	if err != nil {
 		logx.Errorw("UserRPC.GetUser failed", logx.Field("err", err))
-		return nil, err
+		return nil, errors.New("内部错误")
 	}
 
 	// 3.拼接返回结果（因为我们这个接口的数据不是由我们一个服务组成）

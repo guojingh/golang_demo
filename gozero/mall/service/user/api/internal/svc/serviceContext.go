@@ -12,8 +12,8 @@ import (
 type ServiceContext struct {
 	Config config.Config
 
-	Cost       rest.Middleware  // 自定义路由中间件，字段名要与 .api 文件中的声明一致
-	UsermModel model.User2Model // 加入User表增删改查操作的model
+	Cost      rest.Middleware  // 自定义路由中间件，字段名要与 .api 文件中的声明一致
+	UserModel model.User2Model // 加入User表增删改查操作的model
 }
 
 func NewServiceContext(c config.Config) *ServiceContext {
@@ -26,8 +26,8 @@ func NewServiceContext(c config.Config) *ServiceContext {
 	sqlxConn := sqlx.NewMysql(c.Mysql.DataSource)
 
 	return &ServiceContext{
-		Config:     c,
-		UsermModel: model.NewUser2Model(sqlxConn, c.CacheRedis),
-		Cost:       middleware.NewCostMiddleware().Handle,
+		Config:    c,
+		UserModel: model.NewUser2Model(sqlxConn, c.CacheRedis),
+		Cost:      middleware.NewCostMiddleware().Handle,
 	}
 }

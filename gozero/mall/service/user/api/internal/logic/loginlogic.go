@@ -46,7 +46,7 @@ func (l *LoginLogic) Login(req *types.LoginRequest) (resp *types.LoginResponse, 
 	// 两种方式：
 	// 1.用 用户输入的用户名和密码去查数据库
 	// 2.用用户名查到结果，再判断密码
-	user, err := l.svcCtx.UsermModel.FindOneByUsername(l.ctx, username)
+	user, err := l.svcCtx.UserModel.FindOneByUsername(l.ctx, username)
 
 	if err != nil && !errors.Is(err, model.ErrNotFound) {
 		logx.Errorw(

@@ -1,0 +1,24 @@
+Name: order-api
+Host: 0.0.0.0
+Port: 8889
+
+UserRPC:
+  Etcd:
+    Hosts:
+    - 172.16.56.137:2379
+    Key: user.rpc
+    
+Log:
+  ServiceName: "user-srv"
+  Mode: file
+  Encoding: json
+  Path: logs
+  Level: debug
+  Stat: true
+
+Mysql:
+  DataSource: root:123456@tcp(127.0.0.1:3306)/test?charset=utf8mb4&parseTime=True&loc=Local 
+
+CacheRedis:
+  - Host: 127.0.0.1:6379
+    Pass: "123456"    

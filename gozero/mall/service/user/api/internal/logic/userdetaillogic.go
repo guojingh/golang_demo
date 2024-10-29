@@ -32,7 +32,7 @@ func (l *UserDetailLogic) UserDetail(req *types.UserDetailRequest) (resp *types.
 	// 遇事不决先写注释
 	// 1.拿到请求参数
 	// 2.根据用户id查询数据库
-	user, err := l.svcCtx.UsermModel.FindOneByUserId(l.ctx, int64(req.UserID))
+	user, err := l.svcCtx.UserModel.FindOneByUserId(l.ctx, int64(req.UserID))
 
 	if err != nil {
 		logx.Errorw(

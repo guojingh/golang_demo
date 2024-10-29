@@ -44,7 +44,7 @@ func (l *SignupLogic) Signup(req *types.SignupRequest) (resp *types.SignupRespon
 	// 业务逻辑写在这里
 	// 把用户的注册信息保存到数据库
 	// 0.查询username是否已经被注册
-	exist, err := l.svcCtx.UsermModel.FindOneByUsername(l.ctx, req.Username)
+	exist, err := l.svcCtx.UserModel.FindOneByUsername(l.ctx, req.Username)
 	// 0.1 查询数据库失败
 	if err != nil && err != model.ErrNotFound {
 		logx.Errorw(
@@ -79,7 +79,7 @@ func (l *SignupLogic) Signup(req *types.SignupRequest) (resp *types.SignupRespon
 		Gender:   int64(req.Gender),
 	}
 
-	_, err = l.svcCtx.UsermModel.Insert(context.Background(), user)
+	_, err = l.svcCtx.UserModel.Insert(context.Background(), user)
 	if err != nil {
 		logx.Errorf("user_Signup_UsermModel.Insert failed, err:%v", err)
 		return nil, err

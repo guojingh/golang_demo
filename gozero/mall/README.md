@@ -150,3 +150,28 @@ order服务的search接口中添加拦截器，添加一些requestID、token、u
 1. 定义自定义错误格式
 2. 业务代码中要按需返回自定义的错误
 3. 告诉go-zero框架处理一下我们的自定义错误
+
+
+## go-zero 框架中的goctl模版
+
+模版的用处：用来生成代码的，goctl指令生成代码使用就是根据模版来生成代码的。例如
+```bash
+goctl api go -api order.go -dir . -style=goZero
+
+```
+
+### goctl template
+
+查看默认的存放模版文件的路径：GOCTL_HOME=C:\Users\guojinghu\.goctl
+```bash
+goctl env
+```
+
+初始化模版，在自己电脑上生成一份模版文件
+```bash
+goctl template init
+```
+
+具体使用：
+1. 找到模版文件并按需修改
+2. 生成代码 (有同名文件就不会生成)

@@ -3,6 +3,7 @@ package logic
 import (
 	"context"
 	"errors"
+	"fmt"
 
 	"mall/service/user/model"
 	"mall/service/user/rpc/internal/svc"
@@ -33,6 +34,7 @@ func (l *GetUserLogic) GetUser(in *user.GetUserReq) (*user.GetUserResp, error) {
 	// 1.查询数据库失败
 	// 2.根据UserID查不到用户
 	if errors.Is(err, model.ErrNotFound) {
+		fmt.Printf("无效的UserID:%v\n", in.UserID)
 		return nil, errors.New("无效的UserID")
 	}
 

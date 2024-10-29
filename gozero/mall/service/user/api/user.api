@@ -32,8 +32,9 @@ service user-api {
 }
 
 @server (
-	prefix: api
-	jwt:    Auth // 添加 JWT 的鉴权
+	prefix:     api
+	jwt:        Auth // 添加 JWT 的鉴权
+	middleware: Cost // 添加自定义中间件(路由中间件)
 )
 service user-api {
 	@handler UserDetailHandler

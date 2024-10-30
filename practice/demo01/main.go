@@ -2,6 +2,8 @@ package main
 
 import (
 	"fmt"
+	"net/url"
+	"path"
 	"sync"
 	"time"
 )
@@ -32,4 +34,16 @@ func main() {
 
 	// 输出解析后的时间
 	fmt.Println("Parsed time:", parsedTime)
+
+	t, _ := GetBasePath("http://www.baidu.com/cncmp/liwienz?name=guojinghu")
+	fmt.Println(t)
+}
+
+func GetBasePath(targetUrl string) (string, error) {
+	myUrl, err := url.Parse(targetUrl)
+	if err != nil {
+		return "", err
+	}
+
+	return path.Base(myUrl.Path), nil
 }

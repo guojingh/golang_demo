@@ -1,0 +1,14 @@
+Name: shortener-api
+Host: 0.0.0.0
+Port: 8888
+
+ShortUrlDB:
+  DSN: root:123456@tcp(127.0.0.1:3306)/test?charset=utf8mb4&parseTime=True&loc=Asia%2FShanghai
+
+
+Sequence:
+  DSN: root:123456@tcp(127.0.0.1:3306)/test?charset=utf8mb4&parseTime=True&loc=Asia%2FShanghai
+
+Redis:
+  Host: 127.0.0.1:6379
+  Pass: "123456"

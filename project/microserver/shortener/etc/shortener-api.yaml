@@ -12,3 +12,14 @@ Sequence:
 Redis:
   Host: 127.0.0.1:6379
   Pass: "123456"
+
+
+BaseString: L01346A789abcdefUghiklmnopqrstuvwxyzBCjDEFGHIG5KMNOPQR2STVWXYZ
+
+ShortUrlBlackList: ["version", "fuck", "stupid", "vonvert", "health", "api", "css", "js"]
+
+ShortDoamin: q1mi.cn
+
+CacheRedis:
+  - Host: 127.0.0.1:6379
+    Pass: "123456"    

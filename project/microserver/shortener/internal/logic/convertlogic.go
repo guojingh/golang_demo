@@ -9,6 +9,7 @@ import (
 	"github.com/guojinghu/shortenter/internal/svc"
 	"github.com/guojinghu/shortenter/internal/types"
 	"github.com/guojinghu/shortenter/model"
+	"github.com/guojinghu/shortenter/pkg/base62"
 	"github.com/guojinghu/shortenter/pkg/connect"
 	"github.com/guojinghu/shortenter/pkg/md5"
 	"github.com/guojinghu/shortenter/pkg/urltool"
@@ -48,7 +49,7 @@ func (l *ConvertLogic) Convert(req *types.ConvertRequest) (resp *types.ConvertRe
 	// 1.3.2 拿MD5值取数据库中查是否存在
 	u, err := l.svcCtx.ShortUrlModel.FindOneByMd5(l.ctx, sql.NullString{String: md5Value, Valid: true})
 	if !errors.Is(err, model.ErrNotFound) {
-		if err != nil {
+		if err == nil {
 			return nil, fmt.Errorf("该链接已被转为%s", u.Surl.String)
 		}
 		logx.Errorw("ShortUrlModel.FindOneByMd5 failed", logx.LogField{Key: "err", Value: err.Error()})
@@ -71,19 +72,50 @@ func (l *ConvertLogic) Convert(req *types.ConvertRequest) (resp *types.ConvertRe
 		return nil, err
 	}
 
-	// 2.取号
-	// 每来一个转链请求，我们就使用 REPLACE INTO语句往 sequence 表插入一条语句，并且取出主键id作为号码
-	seq, err := l.svcCtx.Sequence.Next()
-	if err != nil {
-		logx.Errorw("Sequence.Next() failed", logx.LogField{Key: "err", Value: err.Error()})
+	var short string
+	for {
+		// 2.取号
+		// 每来一个转链请求，我们就使用 REPLACE INTO语句往 sequence 表插入一条语句，并且取出主键id作为号码
+		seq, err := l.svcCtx.Sequence.Next()
+		if err != nil {
+			logx.Errorw("Sequence.Next() failed", logx.LogField{Key: "err", Value: err.Error()})
+			return nil, err
+		}
+
+		fmt.Println(seq)
+
+		// 3.号码转短链
+		// 3.1 安全性
+		short = base62.Int2String(seq)
+		// 3.2 短域名黑名单避免某些特殊词如：api health fuck...
+		if _, ok := l.svcCtx.ShortUrlBlackList[short]; !ok {
+			break // 生成不在黑名单里的短链接就跳出for循环
+		}
+	}
+
+	fmt.Printf("short:%v\n", short)
+
+	// 4.存储长链接短链接的映射
+	if _, err := l.svcCtx.ShortUrlModel.Insert(
+		l.ctx,
+		&model.ShortUrlMap{
+			Lurl: sql.NullString{String: req.LongUrl, Valid: true},
+			Md5:  sql.NullString{String: md5Value, Valid: true},
+			Surl: sql.NullString{String: short, Valid: true},
+		},
+	); err != nil {
+		logx.Errorw("ShortUrlModel.Insert", logx.LogField{Key: "err", Value: err.Error()})
 		return nil, err
 	}
 
-	fmt.Println(seq)
+	// 4.2 将生成的短链接加到布隆过滤器中
+	if err := l.svcCtx.Filter.Add([]byte(short)); err != nil {
+		logx.Errorw("BloomFilter.Add() failed", logx.LogField{Key: "err", Value: err.Error()})
+	}
 
-	// 3.号码转短链
-	// 4.存储长链接短链接的映射
 	// 5.返回响应
+	// 5.1 返回的是短域名+短链接 qimi.cn/1En
+	shortUrl := l.svcCtx.Config.ShortDoamin + "/" + short
 
-	return
+	return &types.ConvertResponse{ShortUrl: shortUrl}, nil
 }

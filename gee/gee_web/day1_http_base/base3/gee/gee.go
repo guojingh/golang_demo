@@ -18,8 +18,8 @@ func New() *Engine {
 	return &Engine{router: make(map[string]HandlerFunc)}
 }
 
-func (engine *Engine) addRoute(mothod string, pattern string, handler HandlerFunc) {
-	key := mothod + "-" + pattern
+func (engine *Engine) addRoute(method string, pattern string, handler HandlerFunc) {
+	key := method + "-" + pattern
 	engine.router[key] = handler
 }
 

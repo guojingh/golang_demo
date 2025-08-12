@@ -40,3 +40,8 @@ func main() {
 	wg.Wait()
 	fmt.Printf("%v\n", nums)
 }
+
+type People struct {
+	Name string
+	Age  int
+}

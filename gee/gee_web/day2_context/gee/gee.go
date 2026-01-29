@@ -38,3 +38,33 @@ func (engine *Engine) ServeHTTP(w http.ResponseWriter, req *http.Request) {
 	c := newContext(w, req)
 	engine.router.handle(c)
 }
+
+type TreeNode struct {
+	Val   int
+	Left  *TreeNode
+	Right *TreeNode
+}
+
+func inorderTraversal(root *TreeNode) []int {
+
+	//      1
+	//   2     3
+	//   4   5   6
+
+	//  2 4 1 5 3 6
+	var nodeList []int
+	// 将二叉树进行中序遍历
+	// 1.使用递归实现
+	helper(root, &nodeList)
+	return nodeList
+}
+
+func helper(node *TreeNode, nodeList *[]int) {
+	if node == nil {
+		return
+	}
+
+	helper(node.Left, nodeList)
+	*nodeList = append(*nodeList, node.Val)
+	helper(node.Right, nodeList)
+}

@@ -1,0 +1,18 @@
+[req]
+default_bits       = 2048
+prompt             = no
+distinguished_name = dn
+req_extensions     = v3_req
+
+[dn]
+C  = CN
+ST = Beijing
+L  = Beijing
+O  = MyOrg
+CN = MyClient
+
+[v3_req]
+basicConstraints     = CA:FALSE
+keyUsage             = digitalSignature, keyEncipherment
+extendedKeyUsage     = clientAuth
+subjectKeyIdentifier = hash
